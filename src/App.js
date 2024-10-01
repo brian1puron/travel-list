@@ -68,7 +68,7 @@ function Item({ item }) {
 function Stats() {
   return (
     <footer className="stats">
-      💼 You have X items on your list, and you already apcked X (X%)
+      <em> 💼 You have X items on your list, and you already apcked X (X%)</em>
     </footer>
   );
 }

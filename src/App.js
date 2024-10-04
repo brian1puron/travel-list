@@ -7,11 +7,19 @@ const initialItems = [
 ];
 
 export default function App() {
+  const [items, setItems]= useState([]) // Initial state will be an empty array
+
+  
+  function handleAddItems(item){
+    setItems(items=>[...items, item])
+  }
+
+
   return (
     <div className="app">
       <Logo />
-      <Form />
-      <PackingList />
+      <Form onAdditems={handleAddItems}/>
+      <PackingList items={items}/>
       <Stats />
     </div>
   );
@@ -21,9 +29,11 @@ function Logo() {
   return <h1>🌴 Far Away 🛍️</h1>;
 }
 
-function Form() {
+function Form({onAdditems}) {
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState(1);
+  
+
 
   function handleSubmit(e) {
     e.preventDefault(); // how to stop the default of the site reloading everytime when we submit by clikcing add form
@@ -33,8 +43,10 @@ function Form() {
     const newItem = { description, quantity, packed: false, id: Date.now() };
     console.log(newItem);
 
+    onAdditems(newItem)
     setDescription("");
     setQuantity(1);
+    
   }
 
   return (
@@ -62,11 +74,11 @@ function Form() {
   );
 }
 
-function PackingList() {
+function PackingList({items}) {
   return (
     <div className="list">
       <ul>
-        {initialItems.map((item) => (
+        {items.map((item) => (
           <Item item={item} key={item.id} />
         ))}
       </ul>
